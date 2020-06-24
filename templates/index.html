@@ -1,0 +1,106 @@
+{% extends "base.html" %} 
+{% block content %}
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        background-color: #fdfdfd;
+    }
+    
+    .head_text {
+        color: white;
+    }
+    
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+</style>
+
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h3 class=" site-heading my-4 mt-3 text-white"> Welcome to my Parth Blog </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <!-- Blog Entries Column -->
+        <div class="col-md-8 mt-3 left">
+            {% for entry in post %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">{{ entry.0 }}</h2>
+                    <p class="card-text text-muted h6">{{ entry.2 }} | {{ entry.5}} </p>
+                    <p class="card-text">{{entry.4|slice:":200" }}</p>
+                    <a href = "{% url 'readmore' entry.7 %}" class="btn btn-primary">Read More &rarr;</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+    </div>
+
+
+
+
+
+
+
+
+<div class="text-xs-center" >
+  <ul class="pagination" id="page_sep" style="margin-left: 250px" >
+
+    {% if post.has_previous %}
+        <li class="page-item"><a class="page-link" href=="?page=1">1</a></li>
+
+        <li class="page-item"><a class="page-link" href="?page={{ finalds.previous_page_number }}">Previous</a></li>
+    {% endif %}
+
+    {% for i in post.paginator.page_range %}
+      {% if post.number == i %}
+          <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+
+      {% else %}
+          <li class="page-item "><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+
+      {% endif %}
+    {% endfor %}
+
+    
+
+    {% if finalds.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ finalds.next_page_number }}">Next</a></li>
+
+        <li class="page-item"><a class="page-link" href="?page={{ finalds.paginator.num_pages }}">Last</a></li>
+
+    {% endif %}
+
+
+
+
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+</div>
+{%endblock%}

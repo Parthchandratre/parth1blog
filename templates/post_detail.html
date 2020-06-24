@@ -1,0 +1,130 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+                          {% for entry in post %}
+
+      <div class="card-body">
+
+        <h1>{% block title %} {{ entry.0 }} {% endblock title %} </h1>
+
+        <p class=" text-muted">{{ entry.2 }} | {{ entry.5 }} <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i>
+No of Likes: </p>
+        <p class="card-text ">{{ entry.4 | safe }}</p>
+
+      </div>
+
+
+
+  <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <style type="text/css">
+    
+
+
+form button { margin: 5px 0px; }
+textarea { display: block; margin-bottom: 10px; }
+/*post*/
+.post { border: 1px solid #ccc; margin-top: 10px; }
+/*comments*/
+.comments-section { margin-top: 10px; border: 1px solid #ccc; }
+.comment { margin-bottom: 10px; }
+.comment .comment-name { font-weight: bold; }
+.comment .comment-date {
+  font-style: italic;
+  font-size: 0.8em;
+}
+.comment-details { width: 91.5%; float: left; }
+.comment-details p { margin-bottom: 15px; }
+.comment .profile_pic {
+  width: 35px;
+  height: 35px;
+  margin-right: 5px;
+  float: left;
+  border-radius: 50%;
+}
+
+#comment_form { margin-top: 10px; }
+
+.fa {
+  font-size: 30px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.fa:hover {
+  color: darkblue;
+}
+  </style>
+
+<script type="text/javascript">
+  <script>
+function myFunction(x) {
+  x.classList.toggle("fa-thumbs-down");
+}
+</script>
+
+</script>
+</head>
+<body>
+<div class="container" >
+  <div class="row">
+    
+
+    <!-- comments section -->
+      <!-- comment form -->
+      <form class="clearfix" action="" method="post" id="comment_form">
+                    {% csrf_token %}
+
+        <h4>Post a comment:</h4>
+        <textarea name="comment_text" id="comment_text" name ="comment_text" class="form-control" cols="30" rows="3"></textarea>
+         <input type="hidden" id="postid" name="postid" value={{entry.7}}>
+
+
+        <button class="btn btn-primary btn-sm pull-right" id="submit_comment">Submit comment</button>
+      </form>
+
+      <!-- Display total number of comments on this post  -->
+      <h5 ><span id="comments_count">{{ noofcomments }}</span> Comments</h5>
+      <hr>
+      <!-- comments wrapper -->
+
+        <div id="comments-wrapper">
+
+          <div class="comment clearfix">
+
+            <img src="profile.png" alt="" class="profile_pic">
+            <div class="comment-details">
+                                                              {% for entry in comments %}
+
+              <span class="comment-name">{{entry.0}}</span>
+              <span class="comment-date">{{entry.1}}</span>
+              <p>{{entry.2}}</p>
+                                                                  {% endfor %}
+
+            </div>
+
+            </div>
+
+        </div>
+
+      </div>
+      <!-- // comments wrapper -->
+    <!-- // comments section -->
+  </div>
+<!-- Javascripts -->
+<!-- Bootstrap Javascript -->
+
+
+
+                    {% endfor %}
+
+
+
+    </div>
+    {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+  </div>
+</div>
+
+{% endblock content %}
